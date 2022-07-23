@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+
+        <fieldset>
+            <legend>
+                <strong>单价片转换平米</strong>
+            </legend>
+
+            <p>
+                <label for="price">单价</label>
+                <input id="price" type="number" v-model="price" v-on:focus="focus">元/片
+            </p>
+
+            <p>
+                <label for="width">宽</label>
+                <input id="width" type="number" v-model="width" v-on:focus="focus">mm
+            </p>
+
+            <p>
+                <label for="height">高</label>
+                <input id="height" type="number" v-model="height" v-on:focus="focus">mm
+            </p>
+        </fieldset>
+
+        <p>
+            <strong>常用尺寸</strong>
+        </p>
+
+        <p>
+            <button v-for="item in preset" v-on:click="loadPresets(item)">
+                <code>{{ item[0] }}x{{ item[1] }}</code>
+            </button>
+        </p>
+
+        <hr>
+
+        <p>
+            <strong>计算所得</strong>
+        </p>
+
+        <p>
+            <span>
+                {{ priceM2 }}元/m<sup>2</sup>
+            </span>
+
+            <span>
+                <button v-on:click="save">保存记录</button>
+                <button v-on:click="clearHistory">清空记录</button>
+            </span>
+        </p>
+
+        <hr>
+
+        <p>
+            <strong>历史记录</strong>
+        </p>
+
+        <p>
+            <table>
+                <tr>
+                    <th>尺寸</th>
+                    <th>单价/片</th>
+                    <th>单价/m<sup>2</sup></th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="(item, index) in history">
+                    <td>{{ item[0] }}x{{ item[1] }}</td>
+                    <td>{{ item[2] }}</td>
+                    <td>{{ item[3] }}</td>
+                    <td>
+                        <button v-on:click="deleteHistory(index)">删除</button>
+                    </td>
+                </tr>
+                <tr v-if="history.length === 0">
+                    <td><i>空</i></td>
+                    <td><i>空</i></td>
+                    <td><i>空</i></td>
+                    <td><i>空</i></td>
+                </tr>
+            </table>
+        </p>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+
+</html>
