@@ -2,7 +2,6 @@ this.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open('v1').then(function (cache) {
             return cache.addAll([
-                '/tile-calculator/index.html',
                 '/tile-calculator/main.js',
                 '/tile-calculator/style.css',
                 '/tile-calculator/sw.js',
