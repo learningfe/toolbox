@@ -187,4 +187,4 @@ const registerServiceWorker = async () => {
     }
 };
 
-// registerServiceWorker();
+window.addEventListener('load', registerServiceWorker);

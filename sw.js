@@ -1,23 +1,24 @@
+const CACHE_VERSION = 'v1';
+const CACHE_LIST = [
+    '/tile-calculator/',
+    '/tile-calculator/index.html',
+];
+
 this.addEventListener('install', function (event) {
     event.waitUntil(
-        caches.open('v1').then(function (cache) {
-            return cache.addAll([
-                '/tile-calculator/main.js',
-                '/tile-calculator/style.css',
-                '/tile-calculator/sw.js',
-                '/tile-calculator/vue.js',
-            ]);
+        caches.open(CACHE_VERSION).then(function (cache) {
+            return cache.addAll(CACHE_LIST);
         })
     );
 });
 
 this.addEventListener('fetch', function (event) {
-    var response;
-    event.respondWith(caches.match(event.request).catch(function () {
+    event.respondWith(caches.match(event.request).then(response => {
+        return response || fetch(event.request);
+    }).catch(function () {
         return fetch(event.request);
-    }).then(function (r) {
-        response = r;
-        caches.open('v1').then(function (cache) {
+    }).then(function (response) {
+        caches.open(CACHE_VERSION).then(function (cache) {
             cache.put(event.request, response);
         });
         return response.clone();
