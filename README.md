@@ -6,7 +6,7 @@ Tiles are generally counted by piece, this is a calculator used to easily calcul
 
 ## Demo
 
-[Online Demo | Demo 地址](https://learningfe.github.io/tile-calculator/) (Support PWA)
+[Online Demo | Demo 地址](https://learningfe.github.io/toolbox/) (Support PWA)
 
 ## Screenshot
 

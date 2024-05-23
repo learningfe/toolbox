@@ -1,7 +1,7 @@
 const CACHE_VERSION = 'v1';
 const CACHE_LIST = [
-    '/tile-calculator/',
-    '/tile-calculator/index.html',
+    '/toolbox/',
+    '/toolbox/index.html',
 ];
 
 this.addEventListener('install', function (event) {

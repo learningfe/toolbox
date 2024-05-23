@@ -169,9 +169,9 @@ const registerServiceWorker = async () => {
     if ('serviceWorker' in navigator) {
         try {
             const registration = await navigator.serviceWorker.register(
-                '/tile-calculator/sw.js',
+                '/toolbox/sw.js',
                 {
-                    scope: '/tile-calculator/',
+                    scope: '/toolbox/',
                 }
             );
             if (registration.installing) {

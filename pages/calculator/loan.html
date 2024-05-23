@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>贷款</title>
+  <style>
+    #app {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    #form {
+      font-size: 14px;
+      line-height: 24px;
+    }
+    #form > div {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    #form label {
+      flex: 0 0 100px;
+      text-align: right;
+    }
+    #form label::after {
+      content: ':';
+      margin-right: 5px;
+    }
+    #form input {
+      margin-right: 5px;
+      height: 24px;
+      box-sizing: border-box;
+    }
+    #form button {
+      margin-right: 5px;
+    }
+    #form .rate-points {
+      margin-bottom: 5px;
+    }
+
+    .container {
+      padding: 20px 0;
+      width: 100%;
+      min-height: 360px;
+      aspect-ratio: 16 / 9;
+      overflow: auto;
+    }
+
+    .container table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 600px;
+      font-size: 13px;
+    }
+    .container table tr:first-of-type {
+      position: sticky;
+      top: 0;
+    }
+    .container table tr:nth-of-type(odd) {
+      background-color: #f4f4f4;
+    }
+    .container table td,
+    .container table th {
+      border: 1px solid #ddd;
+      padding: 0.5em 1em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>表单</h2>
+    <div id="form">
+      <div>
+        <label for="start">开始时间</label>
+        <input type="month" id="start" v-model="startMonth">
+      </div>
+      <div>
+        <label for="duration">贷款时长</label>
+        <input type="number" id="duration" v-model="durationMonth">个月
+      </div>
+      <div>
+        <label for="principal">贷款本金</label>
+        <input type="number" id="principal" v-model="principal">元
+      </div>
+      <div>
+        <label>利率</label>
+        <div>
+          <div class="rate-points" v-for="(point, index) in ratePoints">
+            <input type="number" v-model="point.rate">%
+            <input type="month" v-model="point.month">
+            <button @click="moveRatePointUp(index)" :disabled="index <= 0">🔼</button>
+            <button @click="moveRatePointDown(index)" :disabled="index >= ratePoints.length - 1">🔽</button>
+            <button v-if="index !== 0" @click="removeRatePoint(index)">删除</button>
+          </div>
+          <button @click="addRatePoint">添加利率点</button>
+        </div>
+      </div>
+      <div>
+        <label>提前还款</label>
+        <div>
+          <div class="rate-points" v-for="(point, index) in returnPoints">
+            <input type="number" v-model="point.money">元
+            <input type="month" v-model="point.month">
+            <button @click="moveReturnPointUp(index)" :disabled="index <= 0">🔼</button>
+            <button @click="moveReturnPointDown(index)" :disabled="index >= returnPoints.length - 1">🔽</button>
+            <button @click="removeReturnPoint(index)">删除</button>
+          </div>
+          <button @click="addReturnPoint">添加还款点</button>
+        </div>
+      </div>
+    </div>
+
+    <h2>测算结果</h2>
+    <div class="chart">
+      <details open>
+        <summary>累积数据</summary>
+        <div class="container" ref="totalContainer"></div>
+      </details>
+      <details open>
+        <summary>每月数据</summary>
+        <div class="container" ref="unitContainer"></div>
+      </details>
+      <details open>
+        <summary>详细数据</summary>
+        <div class="container">
+          <table>
+            <tr>
+              <th>期数</th>
+              <th>还款时间</th>
+              <th>还款金额</th>
+              <th>还款本金</th>
+              <th>还款利息</th>
+              <th>利率</th>
+              <th>剩余本金</th>
+            </tr>
+            <tr v-for="rolumn in tableColumns">
+              <td v-for="column in rolumn">{{ column }}</td>
+            </tr>
+          </table>
+        </div>
+      </details>
+    </div>
+  </div>
+  <script src="/toolbox/js/vue.global.prod.js"></script>
+  <script src="/toolbox/js/dayjs.min.js"></script>
+  <script src="/toolbox/js/echarts.min.js"></script>
+  <script src="/toolbox/js/loan.js"></script>
+</body>
+</html>
