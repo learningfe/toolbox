@@ -12,8 +12,26 @@ createApp({
           rate: 5.88,
           month: '2020-02',
         },
+        {
+          rate: 5.73,
+          month: '2021-01',
+        },
+        {
+          rate: 5.38,
+          month: '2023-01',
+        },
+        {
+          rate: 4.2,
+          month: '2023-09',
+        },
       ],
-      returnPoints: [],
+      returnPoints: [
+        {
+          money: 300000,
+          month: '2024-05',
+          rate: 4.2,
+        },
+      ],
     }
 
     // data
